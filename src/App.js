@@ -3,26 +3,29 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    state = {
+        items: [],
+        pages: undefined,
+        total: undefined,
+    };
+    componentDidMount() {
+        fetch('/jobs?page=1&pageSize=2')
+            .then(r => r.json())
+            .then(r => this.setState(r));
+    }
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                </header>
+                <p className="App-intro">
+                    Please us the /jobs api (example call in componentDidMount) to implement a paginated list
+                    <pre>{JSON.stringify(this.state, undefined, 2)}</pre>
+                </p>
+            </div>
+        );
+    }
 }
 
 export default App;
